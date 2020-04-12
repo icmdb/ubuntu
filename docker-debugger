@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+
+PS4='+ $(date +"%F %T%z") ${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+
+set -x
+
+
+recreeate() {
+    if [[ -f docker-compose.yml ]] || [[ -f docker-compose.yaml ]]; then
+        docker-compose down
+        docker-compose up -d
+    fi
+}
+debugger() {
+    cmd="$2"
+    cmd="${cmd:=sh}"
+
+    container=$(docker ps | awk '$NF == "'$1'" {print $NF}')
+    if [[ "$container" != "" ]]; then
+        docker run --rm -ti \
+            --pid=container:${container} \
+            --network=container:${container} \
+            --volumes-from=${container} \
+            icmdb/debugger ${cmd}
+        return $?
+    else
+        echo "container \"$1\" not exist"
+        return 1
+    fi
+    
+    if [[ $? -ne 0 ]]; then
+        echo "No container ${container} start by docker-compose." 
+        return 1
+    fi
+    return 0
+}
+purge() {
+    docker images | awk '$1=="<none>" {system("docker rmi "$3)}'
+    if [[ "$2" == "containers" ]]; then
+        docker ps -a|awk '$(NF-5) == "Exited" {system("docker rm "$NF)}'
+    fi
+}
+
+help() {
+set +x
+    cat <<EOF
+
+Usage:
+    $(basename $0)
+        help|recreate|purge|<container_name> [args]
+
+EOF
+}
+case "$1" in
+    help)       help;;
+    recreate)   recreeate;;
+    purge)      purge "${@}";;
+    *)          debugger "${@}";;
+esac
+

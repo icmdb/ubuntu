@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  debugger:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+#      args:
+#        - mirror=mirrors.aliyun.com
+#        - semirror=mirrors.aliyun.com
+    container_name: debugger
+    hostname: debugger
+    image: icmdb/debugger
+    #    environment:
+    #     - UBUNTU_DELAY=1000
+

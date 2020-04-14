@@ -14,7 +14,14 @@ cd debugger
 
 sudo ln -s $(pwd)/docker-debugger /usr/bin/
 
-docker-debugger <CONTAINER_NAME>
+# run a container attach the same pid,network,volume with <CONTAINER_NAME>
+docker-debugger <CONTAINER_NAME> 
 
-docker-debugger <CONTAINER_NAME> bash
+docker-debugger <CONTAINER_NAME> bash # start with bash (default is sh)
+
+# remove all undone images and Exited containers
+docker-debuger purge
+
+# recreate all containers with docker-compose if docker-compose file exists
+docker-debuger recreate
 ```

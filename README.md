@@ -15,4 +15,6 @@ cd debugger
 sudo ln -s $(pwd)/docker-debugger /usr/bin/
 
 docker-debugger <CONTAINER_NAME>
+
+docker-debugger <CONTAINER_NAME> bash
 ```

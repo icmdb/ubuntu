@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 ADD . /debug/
 ARG mirror
 ARG semirror
@@ -22,6 +22,7 @@ RUN set -xue; \
          less \
          vim \
          tree \
+         psmisc \
          lsof \
          strace \
          htop \

@@ -36,9 +36,9 @@ debugger() {
     return 0
 }
 purge() {
-    docker images | awk '$1=="<none>" {system("docker rmi "$3)}'
+    docker images | grep '<none>' |  awk '{system("docker rmi "$3)}'
     if [[ "$2" == "containers" ]]; then
-        docker ps -a|awk '$(NF-5) == "Exited" {system("docker rm "$NF)}'
+        docker ps -a | grep Exited | awk '{system("docker rm "$NF)}'
     fi
 }
 

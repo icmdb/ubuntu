@@ -10,8 +10,6 @@ It can be run as a sidecar, may be useful while debugging with Docker or Kuberne
 ```sh
 git clone https://github.com/icmdb/ubuntu.git ~/github.com/icmdb/ubuntu
 
-cd debugger
-
 sudo ln -s ~/github.com/icmdb/ubuntu/docker-debugger /usr/bin/
 
 # run a debug container take the same pid,network,volume with <CONTAINER_NAME>

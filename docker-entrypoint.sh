@@ -15,7 +15,11 @@ if [[ "${DEBUG_DELAY}" != "" ]]; then
 fi
 
 if [[ "${@}" != "" ]]; then
-    exec "${@}" || /bin/sh
+    if [[ "$1" == "crashed" ]]; then
+        exit 1
+    else
+        exec "${@}" || /bin/sh
+    fi
 else
-    nginx -g "daemon off;"
+    exec nginx -g "daemon off;"
 fi

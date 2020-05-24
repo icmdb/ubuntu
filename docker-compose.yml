@@ -5,12 +5,12 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-#      args:
-#        - mirror=mirrors.aliyun.com
-#        - semirror=mirrors.aliyun.com
+      args:
+        - BASE_IMAGE=alpine:3.11
+        - MIRRIR=mirrors.aliyun.com
+        - CALICOCTL_VERSION=v3.14.0
+        - TERMSHARK_VERSION=2.1.1
     container_name: debugger
     hostname: debugger
-    image: icmdb/debugger
-    #    environment:
-    #     - UBUNTU_DELAY=1000
+    image: icmdb/debugger:alpine-3.11
 
